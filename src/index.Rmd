@@ -109,7 +109,7 @@ plot(LMFit1, which= c(1:2))
 
 
 
-**1. Based upon the test of correlation, we have evidence of a positive linear association between summer NDMI and summer NDVI, with a p-value < 2.2e-16 (less than 0.05). For every 1 unit increase in summer NDMI, there is a 0.908772 increase in summer NDVI (p-value < 2.2e-16).** 
+**1. Based upon a test of correlation, we have evidence of a positive linear association between summer NDMI and summer NDVI, with a p-value < 2.2e-16 (less than 0.05). For every 1 unit increase in summer NDMI, there is a 0.908772 increase in summer NDVI (p-value < 2.2e-16).** 
 
 
 
@@ -180,7 +180,7 @@ plot(LMFit2, which= c(1:2))
 
 
 
-**2. The p-value from the test of correlation for average summer NDVI and average winter NDSI is 0.0002124 and less than 0.05. We have evidence of a positive linear association between average summer NDVI and average winter NDSI. For every 1 unit increase in average winter NDSI, there is a 0.042658 increase in average summer NDVI.** 
+**2. The p-value from a test of correlation for average summer NDVI and average winter NDSI is 0.0002124 and less than 0.05. We have evidence of a positive linear association between average summer NDVI and average winter NDSI. For every 1 unit increase in average winter NDSI, there is a 0.042658 increase in average summer NDVI.** 
 
 
 
