@@ -23,7 +23,7 @@ knitr::opts_knit$set(root.dir='..')
 ```{r dataread, warning=F,message=F}
 ####-----Reading in Data and Stacking it ----- ####
 #Reading in files
-files <- list.files('data',full.names=T)
+files <- list.files('../data',full.names=T)
 
 
 #Read in individual data files
@@ -69,10 +69,10 @@ full_wide1 <- full_long %>%
 
 
 ```{r plot ndvi vs ndmi, warning=F,message=F}
-# Plot ndvi as response and ndmi as predictor, distinguishing between burn or unburned sites, limit to only summer months 
-summer_wide <- full_wide1 %>%
-  filter(month %in% c(6,7,8))
-ggplot(summer_wide, aes(x=ndmi, y=ndvi, color=site))+
+# Plot ndvi as response and ndmi as predictor, distinguishing between burn or unburned sites
+full_wide1 %>%
+  filter(!month %in% c(11,12,1,2,3,4)) %>%
+ggplot(., aes(x=ndmi, y=ndvi, color=site))+
   geom_point(shape=1)+
   labs(x="NDMI", y="NDVI")+
   theme_few()+ 
@@ -84,19 +84,21 @@ ggplot(summer_wide, aes(x=ndmi, y=ndvi, color=site))+
 
 ```{r plot ndvi vs ndmi, facet wrap site}
 # Plot ndvi vs ndmi with facet wrap over site type (burned or unburned)
-ggplot(summer_wide, aes(x=ndmi, y=ndvi))+
+full_wide1 %>%
+  filter(!month %in% c(11,12,1,2,3,4)) %>%
+ggplot(., aes(x=ndmi, y=ndvi))+
   geom_point(shape=1)+
   labs(x="NDMI", y="NDVI")+
-  theme_few()+
+  theme_few()+ 
   facet_wrap('site')
 ```
 
 
 ```{r}
 # Test correlation between ndvi and ndmi
-cor.test(summer_wide$ndmi, summer_wide$ndvi, method='pearson')
+cor.test(full_wide1$ndmi, full_wide1$ndvi, method='pearson')
 # Fit lm model for ndvi by ndmi
-LMFit1 <- lm(ndvi~ndmi, data =summer_wide)
+LMFit1 <- lm(ndvi~ndmi, data =full_wide1)
 summary(LMFit1)
 ```
 
@@ -109,13 +111,13 @@ plot(LMFit1, which= c(1:2))
 
 
 
-**1. Based upon the test of correlation, we have evidence of a positive linear association between summer NDMI and summer NDVI, with a p-value < 2.2e-16 (less than 0.05). For every 1 unit increase in summer NDMI, there is a 0.908772 increase in summer NDVI (p-value < 2.2e-16).** 
+**1. Based upon the test of correlation between NDMI and NDVI, we have evidence of a negative linear association between NDMI and NDVI, with a p-value < 2.2e-16 (less than 0.05). However, visually the correlation appears to be positive. (I am hoping to ask about this analysis in next class session.)** 
 
 
 
 #### Bonus Question 1
 ```{r convert long to wide via pivot_wider()}
-# Convert from long to wide with pivot_wider() 
+# Convert from long to wide with pivot_wider()
 full_wide2 <- full_long %>%
   pivot_wider(names_from = 'data', values_from = 'value')
 ```
